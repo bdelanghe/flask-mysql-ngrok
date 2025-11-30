@@ -92,20 +92,6 @@
     run.exec = ''
       python app.py
     '';
-    ngrok.exec = ''
-      if [ -f ngrok.yml ]; then
-        ngrok http 80 --config ngrok.yml
-      elif [ -f .env ]; then
-        export $(grep -v '^#' .env | xargs)
-        if [ -n "$NGROK_AUTHTOKEN" ]; then
-          ngrok http 80 --authtoken "$NGROK_AUTHTOKEN"
-        else
-          ngrok http 80
-        fi
-      else
-        ngrok http 80
-      fi
-    '';
   };
 
   # Environment variables
