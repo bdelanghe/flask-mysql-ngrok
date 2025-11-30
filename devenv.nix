@@ -58,16 +58,16 @@
   # Use ngrok config file if it exists, otherwise fall back to environment variable
   processes.ngrok.exec = ''
     if [ -f ngrok.yml ]; then
-      ${lib.getExe pkgs.ngrok} http 80 --config ngrok.yml
+      ${lib.getExe pkgs.ngrok} start flask-app --config ngrok.yml
     elif [ -f .env ]; then
       export $(grep -v '^#' .env | xargs)
       if [ -n "$NGROK_AUTHTOKEN" ]; then
-        ${lib.getExe pkgs.ngrok} http 80 --authtoken "$NGROK_AUTHTOKEN"
+        ${lib.getExe pkgs.ngrok} http 5000 --authtoken "$NGROK_AUTHTOKEN" --domain uneloped-yen-overcontentiously.ngrok-free.dev
       else
-        ${lib.getExe pkgs.ngrok} http 80
+        ${lib.getExe pkgs.ngrok} http 5000
       fi
     else
-      ${lib.getExe pkgs.ngrok} http 80
+      ${lib.getExe pkgs.ngrok} http 5000
     fi
   '';
 
