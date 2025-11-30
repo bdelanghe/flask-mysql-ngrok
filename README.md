@@ -49,10 +49,15 @@ pip install -r requirements.txt
 
 ### 4. Database Setup
 
-The database is automatically initialized when you run the app. The `devenv.nix` configuration:
-- Creates a MySQL database named `todoapp`
-- Creates a user `todoapp` with password `todoapp`
-- Grants all privileges to the user
+The database is automatically created by devenv. After starting MySQL, initialize the database user:
+
+```bash
+devenv task init-db
+```
+
+This creates:
+- A MySQL user `todoapp` with password `todoapp`
+- Grants all privileges on the `todoapp` database
 
 The `models.py` file will automatically create the `todos` table on first run.
 
