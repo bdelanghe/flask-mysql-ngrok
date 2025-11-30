@@ -80,19 +80,54 @@ ngrok is automatically started when you run `devenv up`, which exposes your loca
 
 ### 1. Get your ngrok authtoken
 
-Sign up at [ngrok.com](https://ngrok.com) and get your authtoken.
+Sign up at [ngrok.com](https://ngrok.com) and get your authtoken from the [dashboard](https://dashboard.ngrok.com/get-started/your-authtoken).
 
-### 2. Configure ngrok
+### 2. Configure ngrok authtoken
+
+You can configure ngrok in one of two ways:
+
+**Option A: Using ngrok config file (recommended)**
+
+Create a `ngrok.yml` file in the project root (copy from `ngrok.yml.example`):
 
 ```bash
-ngrok config add-authtoken YOUR_AUTHTOKEN
+cp ngrok.yml.example ngrok.yml
 ```
+
+Then edit `ngrok.yml` and add your authtoken:
+
+```yaml
+version: 3
+
+agent:
+  authtoken: your_ngrok_authtoken_here
+```
+
+**Option B: Using environment variable**
+
+Create a `.env` file in the project root (copy from `.env.example`):
+
+```bash
+cp .env.example .env
+```
+
+Then edit `.env` and add your ngrok authtoken:
+
+```
+NGROK_AUTHTOKEN=your_ngrok_authtoken_here
+```
+
+Both `ngrok.yml` and `.env` files are already in `.gitignore` and won't be committed to git.
 
 ### 3. Start services
 
-When you run `devenv up`, both MySQL and ngrok will start automatically. ngrok will provide you with a public URL (e.g., `https://abc123.ngrok.io`) that forwards to your local Flask app on port 5000.
+When you run `devenv up`, both MySQL and ngrok will start automatically. ngrok will:
+- Use `ngrok.yml` if it exists, or fall back to `NGROK_AUTHTOKEN` from `.env`
+- Provide you with a public URL (e.g., `https://abc123.ngrok.io`) that forwards to your local Flask app on port 80
 
 **Note:** Make sure your Flask app is running (`python app.py`) before accessing the ngrok URL, otherwise you'll get a connection error.
+
+**Note:** Running on port 80 may require sudo privileges. If you encounter permission errors, you can change the port in `app.py` and update the ngrok configuration accordingly.
 
 ## Project Structure
 

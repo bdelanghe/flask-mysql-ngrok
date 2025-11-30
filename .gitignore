@@ -8,3 +8,9 @@ devenv.local.yaml
 
 # pre-commit
 .pre-commit-config.yaml
+
+# Environment variables (secrets)
+.env
+
+# ngrok configuration (contains authtoken)
+ngrok.yml

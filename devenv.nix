@@ -52,7 +52,21 @@
   };
 
   # https://devenv.sh/processes/
-  processes.ngrok.exec = "${lib.getExe pkgs.ngrok} http 5000";
+  # Use ngrok config file if it exists, otherwise fall back to environment variable
+  processes.ngrok.exec = ''
+    if [ -f ngrok.yml ]; then
+      ${lib.getExe pkgs.ngrok} http 80 --config ngrok.yml
+    elif [ -f .env ]; then
+      export $(grep -v '^#' .env | xargs)
+      if [ -n "$NGROK_AUTHTOKEN" ]; then
+        ${lib.getExe pkgs.ngrok} http 80 --authtoken "$NGROK_AUTHTOKEN"
+      else
+        ${lib.getExe pkgs.ngrok} http 80
+      fi
+    else
+      ${lib.getExe pkgs.ngrok} http 80
+    fi
+  '';
 
   # https://devenv.sh/tasks/
   tasks = {
@@ -76,7 +90,18 @@
       python app.py
     '';
     ngrok.exec = ''
-      ngrok http 5000
+      if [ -f ngrok.yml ]; then
+        ngrok http 80 --config ngrok.yml
+      elif [ -f .env ]; then
+        export $(grep -v '^#' .env | xargs)
+        if [ -n "$NGROK_AUTHTOKEN" ]; then
+          ngrok http 80 --authtoken "$NGROK_AUTHTOKEN"
+        else
+          ngrok http 80
+        fi
+      else
+        ngrok http 80
+      fi
     '';
   };
 
