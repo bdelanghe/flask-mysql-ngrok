@@ -78,9 +78,9 @@
       pip install -r requirements.txt
       echo "Setup complete!"
       echo ""
-      echo "Note: After starting MySQL with 'devenv up', run 'devenv task initdb' to create the database user."
+      echo "Note: After starting MySQL with 'devenv up', run 'devenv task setupdb' to create the database user."
     '';
-    initdb.exec = ''
+    setupdb.exec = ''
       echo "Initializing MySQL user and permissions..."
       mysql -u root <<'SQL'
       CREATE USER IF NOT EXISTS 'todoapp'@'localhost' IDENTIFIED BY 'todoapp';
