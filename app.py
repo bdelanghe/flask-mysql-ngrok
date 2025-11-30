@@ -5,6 +5,13 @@ from models import init_db, get_all_todos, add_todo, update_todo, delete_todo
 app = Flask(__name__)
 app.config.from_object(Config)
 
+@app.after_request
+def add_ngrok_headers(response):
+    """Add headers to work with ngrok"""
+    response.headers['ngrok-skip-browser-warning'] = '1'
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
+
 @app.route('/')
 def index():
     """Display all todos"""
@@ -65,5 +72,5 @@ def delete(todo_id):
 if __name__ == '__main__':
     # Initialize database on startup
     init_db()
-    app.run(host='0.0.0.0', port=80, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
 
