@@ -73,14 +73,14 @@
 
   # https://devenv.sh/tasks/
   tasks = {
-    setup.exec = ''
+    "app:setup".exec = ''
       echo "Setting up the development environment..."
       pip install -r requirements.txt
       echo "Setup complete!"
       echo ""
-      echo "Note: After starting MySQL with 'devenv up', run 'devenv task setupdb' to create the database user."
+      echo "Note: After starting MySQL with 'devenv up', run 'devenv task app:initdb' to create the database user."
     '';
-    setupdb.exec = ''
+    "app:initdb".exec = ''
       echo "Initializing MySQL user and permissions..."
       mysql -u root <<'SQL'
       CREATE USER IF NOT EXISTS 'todoapp'@'localhost' IDENTIFIED BY 'todoapp';
@@ -89,7 +89,7 @@
       SQL
       echo "MySQL user 'todoapp' created and granted privileges on 'todoapp' database"
     '';
-    run.exec = ''
+    "app:run".exec = ''
       python app.py
     '';
   };
