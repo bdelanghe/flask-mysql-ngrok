@@ -76,7 +76,7 @@ The app will be available at `http://localhost:5000`
 
 ## Using ngrok
 
-To expose your local Flask app to the internet using ngrok:
+ngrok is automatically started when you run `devenv up`, which exposes your local Flask app to the internet.
 
 ### 1. Get your ngrok authtoken
 
@@ -88,20 +88,11 @@ Sign up at [ngrok.com](https://ngrok.com) and get your authtoken.
 ngrok config add-authtoken YOUR_AUTHTOKEN
 ```
 
-### 3. Start ngrok tunnel
+### 3. Start services
 
-In a separate terminal (or after starting the Flask app):
+When you run `devenv up`, both MySQL and ngrok will start automatically. ngrok will provide you with a public URL (e.g., `https://abc123.ngrok.io`) that forwards to your local Flask app on port 5000.
 
-```bash
-devenv task ngrok
-```
-
-Or manually:
-```bash
-ngrok http 5000
-```
-
-ngrok will provide you with a public URL (e.g., `https://abc123.ngrok.io`) that forwards to your local Flask app.
+**Note:** Make sure your Flask app is running (`python app.py`) before accessing the ngrok URL, otherwise you'll get a connection error.
 
 ## Project Structure
 

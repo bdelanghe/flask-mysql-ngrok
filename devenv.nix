@@ -23,9 +23,9 @@
     echo "MySQL: $(mysql --version 2>/dev/null || echo 'MySQL available')"
     echo "ngrok: $(ngrok version 2>/dev/null || echo 'ngrok available')"
     echo ""
-    echo "To start MySQL: devenv up"
+    echo "To start MySQL and ngrok: devenv up"
     echo "To run the app: python app.py"
-    echo "To expose with ngrok: ngrok http 5000"
+    echo "Note: ngrok will start automatically with 'devenv up'"
   '';
 
   # https://devenv.sh/languages/
@@ -50,6 +50,9 @@
       };
     };
   };
+
+  # https://devenv.sh/processes/
+  processes.ngrok.exec = "${lib.getExe pkgs.ngrok} http 5000";
 
   # https://devenv.sh/tasks/
   tasks = {
