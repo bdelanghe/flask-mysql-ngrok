@@ -4,6 +4,9 @@
   # https://devenv.sh/basics/
   env.GREET = "devenv";
 
+  # https://devenv.sh/integrations/dotenv/
+  dotenv.enable = true;
+
   # https://devenv.sh/packages/
   packages = [
     pkgs.python3
@@ -75,9 +78,9 @@
       pip install -r requirements.txt
       echo "Setup complete!"
       echo ""
-      echo "Note: After starting MySQL with 'devenv up', run 'devenv task init-db' to create the database user."
+      echo "Note: After starting MySQL with 'devenv up', run 'devenv task initdb' to create the database user."
     '';
-    "init-db".exec = ''
+    initdb.exec = ''
       echo "Initializing MySQL user and permissions..."
       mysql -u root <<'SQL'
       CREATE USER IF NOT EXISTS 'todoapp'@'localhost' IDENTIFIED BY 'todoapp';
