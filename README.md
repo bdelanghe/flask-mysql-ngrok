@@ -129,6 +129,36 @@ When you run `devenv up`, both MySQL and ngrok will start automatically. ngrok w
 
 **Note:** Running on port 80 may require sudo privileges. If you encounter permission errors, you can change the port in `app.py` and update the ngrok configuration accordingly.
 
+### 4. Browser Warning Page (Free Domains)
+
+ngrok free domains (`.ngrok-free.dev`) show a browser warning page that requires clicking "Visit Site" to proceed. This is a security feature and cannot be bypassed for browser access.
+
+**For Browser Access:**
+- Simply click "Visit Site" on the warning page when accessing the URL in a browser
+- This is a one-time action per browser session
+
+**For Programmatic Access (API clients, webhooks, curl, etc.):**
+You can bypass the warning by sending the `ngrok-skip-browser-warning` header with your requests:
+
+```bash
+# Using curl
+curl -H "ngrok-skip-browser-warning: true" https://your-domain.ngrok-free.dev
+
+# Using Python requests
+import requests
+headers = {"ngrok-skip-browser-warning": "true"}
+response = requests.get("https://your-domain.ngrok-free.dev", headers=headers)
+
+# Using JavaScript fetch
+fetch("https://your-domain.ngrok-free.dev", {
+  headers: {
+    "ngrok-skip-browser-warning": "true"
+  }
+})
+```
+
+**Note:** To avoid the warning page entirely, you'll need a paid ngrok plan with a custom domain.
+
 ## Project Structure
 
 ```
