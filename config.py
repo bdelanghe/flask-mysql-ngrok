@@ -16,4 +16,6 @@ class Config:
     # Flask Configuration
     SECRET_KEY = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
     DEBUG = os.getenv('FLASK_ENV', 'development') == 'development'
+    # ngrok configuration - set SERVER_NAME when using ngrok
+    SERVER_NAME = os.getenv('SERVER_NAME', None)  # Set to ngrok domain if using ngrok
 
